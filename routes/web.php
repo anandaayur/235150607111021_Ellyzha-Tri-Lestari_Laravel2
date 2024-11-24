@@ -3,12 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route untuk halaman utama
+Route::get('/', [BlogController::class, 'index'])->name('home');
 
-Route::get('/blogs', [BlogController::class, 'showBlogs']);
+// Route untuk menampilkan semua blog (daftar blog)
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 
-Route::get('/tambah', [BlogController::class, 'tambahBlog']);
+// Route untuk halaman tambah blog
+Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
 
-Route::post('/tambah', [BlogController::class, 'createBlog']);
+// Route untuk menyimpan blog baru
+Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+
+Route::get('/dashboard', function () {
+    return view('dashboard'); // pastikan kamu punya view 'dashboard.blade.php'
+})->name('dashboard');
